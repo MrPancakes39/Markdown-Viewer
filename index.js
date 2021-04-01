@@ -2,13 +2,17 @@ const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const fs = require("fs");
 
-function createWindow() {
+const url = require("url");
+const temp = require("temp");
+temp.track();
+
+async function createWindow() {
     const win = new BrowserWindow({
         width: 1280,
         height: 720
     })
-    createFile();
-    win.loadFile("index.html");
+    location = await createFile();
+    win.loadURL(`file://${location}`);
 }
 
 app.whenReady().then(() => {
@@ -23,13 +27,15 @@ app.whenReady().then(() => {
 
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") {
+        temp.cleanupSync();
         app.quit();
     }
 })
 
-function createFile() {
-    templatePath = path.join(__dirname, "md2html.html");
-    outputPath = path.join(__dirname, "index.html");
+async function createFile() {
+    let templatePath = path.join(__dirname, "md2html-template.html");
+    let outputPath = temp.openSync({ suffix: ".html" })["path"];
+    // outputPath = path.join(__dirname, "index.html");
 
     markPath = "/home/salman/Desktop/Stuff-Folder/CTF-Writeups/2020/VulconCTF/misc/All I know was zip/The Solution/journey.md";
     // markPath = "/home/salman/Desktop/Stuff-Folder/TryHackMe Stuff/intro-to-linux.md";
@@ -39,6 +45,8 @@ function createFile() {
 
         const indexFile = htmlFile.split("{{content}}").join(markFile);
         fs.writeFileSync(outputPath, indexFile);
+
+        return url.format(outputPath);
     } catch (err) {
         console.error(err)
     }

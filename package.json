@@ -4,7 +4,8 @@
   "description": "A Simple Markdown Viewer for rest of us.",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "package-linux": "electron-packager . markdown-viewer --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icon.png --prune=true --out=release-builds"
   },
   "keywords": [
     "markdown"
@@ -12,7 +13,8 @@
   "author": "Salman Hasan",
   "license": "GPL-3.0",
   "devDependencies": {
-    "electron": "^12.0.2"
+    "electron": "^12.0.2",
+    "electron-packager": "^15.2.0"
   },
   "dependencies": {
     "temp": "^0.9.4"

@@ -6,6 +6,9 @@ const url = require("url");
 const temp = require("temp");
 temp.track();
 
+// Set ENV var.
+process.env.NODE_ENV = "production";
+
 async function createWindow(props, markPath) {
     const win = new BrowserWindow(props)
     Menu.setApplicationMenu(null);
@@ -20,7 +23,7 @@ app.whenReady().then(() => {
         webPreferences: {
             preload: path.join(__dirname, "preload-ind.js")
         },
-        icon: path.join(__dirname, "icon.png"),
+        icon: path.join(__dirname, "assets", "icon.png"),
         resizable: false
     });
 
@@ -51,7 +54,7 @@ ipcMain.on("open-file", (event) => {
         webPreferences: {
             preload: path.join(__dirname, "preload-md.js")
         },
-        icon: path.join(__dirname, "icon.png")
+        icon: path.join(__dirname, "assets", "icon.png")
     }, filePath);
 })
 

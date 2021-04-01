@@ -1,4 +1,7 @@
 # Markdown-Viewer
+
+[![license](https://img.shields.io/github/license/MrPancakes39/Markdown-Viewer.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+
 A Simple Markdown Viewer for rest of us.
 
 ## Licenses

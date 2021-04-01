@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, Menu } = require("electron");
 const path = require("path");
 const fs = require("fs");
 
@@ -11,6 +11,7 @@ async function createWindow() {
         width: 1280,
         height: 720
     })
+    Menu.setApplicationMenu(null);
     location = await createFile();
     win.loadURL(`file://${location}`);
 }

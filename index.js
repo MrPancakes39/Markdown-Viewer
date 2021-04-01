@@ -19,7 +19,9 @@ app.whenReady().then(() => {
         height: 450,
         webPreferences: {
             preload: path.join(__dirname, "preload-ind.js")
-        }
+        },
+        icon: path.join(__dirname, "icon.png"),
+        resizable: false
     });
 
     app.on("activate", () => {
@@ -36,21 +38,21 @@ app.on("window-all-closed", () => {
     }
 })
 
-ipcMain.on("open-file", (event, arg) => {
+ipcMain.on("open-file", (event) => {
     // Choose file.
-    let path = dialog.showOpenDialogSync({
+    let filePath = dialog.showOpenDialogSync({
         properties: ["openFile"],
         filters: [{ name: "Markdown Files", extensions: ["md"] }]
     })[0];
-    const preloadMD = path.join(__dirname, "preload-md.js");
 
     createWindow({
         width: 1280,
         height: 720,
         webPreferences: {
-            preload: preloadMD
-        }
-    }, path);
+            preload: path.join(__dirname, "preload-md.js")
+        },
+        icon: path.join(__dirname, "icon.png")
+    }, filePath);
 })
 
 async function createFile(markPath) {

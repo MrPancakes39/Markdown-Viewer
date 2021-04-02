@@ -17,15 +17,28 @@ async function createWindow(props, markPath) {
 }
 
 app.whenReady().then(() => {
-    createWindow({
-        width: 600,
-        height: 450,
-        webPreferences: {
-            preload: path.join(__dirname, "preload-ind.js")
-        },
-        icon: path.join(__dirname, "assets", "icon.png"),
-        resizable: false
-    });
+    // If passed on a markdown file then open it, else open the default window
+    if (process.argv.length >= 2 && process.argv[1] !== ".") {
+        let filePath = process.argv[1];
+        createWindow({
+            width: 1280,
+            height: 720,
+            webPreferences: {
+                preload: path.join(__dirname, "preload-md.js")
+            },
+            icon: path.join(__dirname, "assets", "icon.png")
+        }, filePath);
+    } else {
+        createWindow({
+            width: 600,
+            height: 450,
+            webPreferences: {
+                preload: path.join(__dirname, "preload-ind.js")
+            },
+            icon: path.join(__dirname, "assets", "icon.png"),
+            resizable: false
+        });
+    }
 
     app.on("activate", () => {
         if (BrowserWindow.getAllWindows().length === 0) {

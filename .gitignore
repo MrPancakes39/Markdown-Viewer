@@ -1,3 +1,4 @@
 node_modules/
 release-builds/
+builds/win32/setup.exe
 index.html

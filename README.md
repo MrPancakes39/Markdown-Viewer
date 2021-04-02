@@ -5,6 +5,7 @@
 A Simple Markdown Viewer for rest of us.
 
 <a href="https://mega.nz/file/YUpDTSAR#tD8Gv6gf_1Hp6K3DI6pdZVGOLodUlYGueKvbKJ8MFFI"><img alt="download-for-windows" src="https://raw.githubusercontent.com/MrPancakes39/Markdown-Viewer/main/assets/download-windows.png" width="200px"></a>
+<a href="https://mega.nz/file/RZ5EHCDC#9U-C8d6DEVWK32sQfY6ya3u5sEVnI4oyHi8fDyiV75I"><img alt="download-for-linux" src="https://raw.githubusercontent.com/MrPancakes39/Markdown-Viewer/main/assets/download-linux.png" width="200px"></a>
 
 ## Thanks to
 

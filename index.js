@@ -42,7 +42,15 @@ app.whenReady().then(() => {
 
     app.on("activate", () => {
         if (BrowserWindow.getAllWindows().length === 0) {
-            createWindow();
+            createWindow({
+                width: 600,
+                height: 450,
+                webPreferences: {
+                    preload: path.join(__dirname, "preload-ind.js")
+                },
+                icon: path.join(__dirname, "assets", "icon.png"),
+                resizable: false
+            });
         }
     })
 })

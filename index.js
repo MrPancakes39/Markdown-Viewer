@@ -4,53 +4,68 @@ const fs = require("fs");
 
 const url = require("url");
 const temp = require("temp");
+const { electron } = require("process");
 temp.track();
 
 // Set ENV var.
 process.env.NODE_ENV = "production";
 
-async function createWindow(props, markPath) {
-    const win = new BrowserWindow(props)
-    Menu.setApplicationMenu(null);
-    location = await createFile(markPath);
+async function createWindow(type, markPath) {
+    const win = new BrowserWindow(windowType(type));
+    // Create Refresh Menu Button.
+    const menu = Menu.buildFromTemplate([{
+        label: "Refresh",
+        click: async function() {
+            // Get current window and Recreate the File.
+            const currentWin = BrowserWindow.getFocusedWindow();
+            let filePath = currentWin["currentFile"];
+            const location = await createFile(filePath);
+            BrowserWindow.getFocusedWindow().loadURL(`file://${location}`);
+        },
+        accelerator: "CmdOrCtrl + R",
+        toolTip: "Heyyy"
+    }]);
+    Menu.setApplicationMenu(menu);
+    const location = await createFile(markPath);
     win.loadURL(`file://${location}`);
+    // sets each BrowserWindow it's open filePath.
+    win["currentFile"] = markPath || path.join(__dirname, "index.md");
 }
 
-app.whenReady().then(() => {
-    // If passed on a markdown file then open it, else open the default window
-    if (process.argv.length >= 2 && process.argv[1] !== ".") {
-        let filePath = process.argv[1];
-        createWindow({
+function windowType(type) {
+    if (type == "markdown") {
+        return {
             width: 1280,
             height: 720,
             webPreferences: {
                 preload: path.join(__dirname, "preload-md.js")
             },
             icon: path.join(__dirname, "assets", "icon.png")
-        }, filePath);
+        }
+    }
+    return {
+        width: 600,
+        height: 450,
+        webPreferences: {
+            preload: path.join(__dirname, "preload-ind.js")
+        },
+        icon: path.join(__dirname, "assets", "icon.png"),
+        resizable: false
+    }
+}
+
+app.whenReady().then(() => {
+    // If passed on a markdown file then open it, else open the default window
+    if (process.argv.length >= 2 && process.argv[1] !== ".") {
+        let filePath = process.argv[1];
+        createWindow("markdown", filePath);
     } else {
-        createWindow({
-            width: 600,
-            height: 450,
-            webPreferences: {
-                preload: path.join(__dirname, "preload-ind.js")
-            },
-            icon: path.join(__dirname, "assets", "icon.png"),
-            resizable: false
-        });
+        createWindow("default");
     }
 
     app.on("activate", () => {
         if (BrowserWindow.getAllWindows().length === 0) {
-            createWindow({
-                width: 600,
-                height: 450,
-                webPreferences: {
-                    preload: path.join(__dirname, "preload-ind.js")
-                },
-                icon: path.join(__dirname, "assets", "icon.png"),
-                resizable: false
-            });
+            createWindow("default");
         }
     })
 })
@@ -67,16 +82,12 @@ ipcMain.on("open-file", (event) => {
     let filePath = dialog.showOpenDialogSync({
         properties: ["openFile"],
         filters: [{ name: "Markdown Files", extensions: ["md"] }]
-    })[0];
+    });
+    filePath = (filePath) ? filePath[0] : null;
 
-    createWindow({
-        width: 1280,
-        height: 720,
-        webPreferences: {
-            preload: path.join(__dirname, "preload-md.js")
-        },
-        icon: path.join(__dirname, "assets", "icon.png")
-    }, filePath);
+    if (filePath) {
+        createWindow("markdown", filePath);
+    }
 })
 
 async function createFile(markPath) {

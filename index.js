@@ -9,48 +9,47 @@ temp.track();
 // Set ENV var.
 process.env.NODE_ENV = "production";
 
-async function createWindow(props, markPath) {
-    const win = new BrowserWindow(props)
+async function createWindow(type, markPath) {
+    const win = new BrowserWindow(windowType(type));
     Menu.setApplicationMenu(null);
     location = await createFile(markPath);
     win.loadURL(`file://${location}`);
 }
 
-app.whenReady().then(() => {
-    // If passed on a markdown file then open it, else open the default window
-    if (process.argv.length >= 2 && process.argv[1] !== ".") {
-        let filePath = process.argv[1];
-        createWindow({
+function windowType(type) {
+    if (type == "markdown") {
+        return {
             width: 1280,
             height: 720,
             webPreferences: {
                 preload: path.join(__dirname, "preload-md.js")
             },
             icon: path.join(__dirname, "assets", "icon.png")
-        }, filePath);
+        }
+    }
+    return {
+        width: 600,
+        height: 450,
+        webPreferences: {
+            preload: path.join(__dirname, "preload-ind.js")
+        },
+        icon: path.join(__dirname, "assets", "icon.png"),
+        resizable: false
+    }
+}
+
+app.whenReady().then(() => {
+    // If passed on a markdown file then open it, else open the default window
+    if (process.argv.length >= 2 && process.argv[1] !== ".") {
+        let filePath = process.argv[1];
+        createWindow("markdown", filePath);
     } else {
-        createWindow({
-            width: 600,
-            height: 450,
-            webPreferences: {
-                preload: path.join(__dirname, "preload-ind.js")
-            },
-            icon: path.join(__dirname, "assets", "icon.png"),
-            resizable: false
-        });
+        createWindow("default");
     }
 
     app.on("activate", () => {
         if (BrowserWindow.getAllWindows().length === 0) {
-            createWindow({
-                width: 600,
-                height: 450,
-                webPreferences: {
-                    preload: path.join(__dirname, "preload-ind.js")
-                },
-                icon: path.join(__dirname, "assets", "icon.png"),
-                resizable: false
-            });
+            createWindow("default");
         }
     })
 })
@@ -71,14 +70,7 @@ ipcMain.on("open-file", (event) => {
     filePath = (filePath) ? filePath[0] : null;
 
     if (filePath) {
-        createWindow({
-            width: 1280,
-            height: 720,
-            webPreferences: {
-                preload: path.join(__dirname, "preload-md.js")
-            },
-            icon: path.join(__dirname, "assets", "icon.png")
-        }, filePath);
+        createWindow("markdown", filePath);
     }
 })
 

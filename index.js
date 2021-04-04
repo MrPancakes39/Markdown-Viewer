@@ -4,6 +4,7 @@ const fs = require("fs");
 
 const url = require("url");
 const temp = require("temp");
+const { electron } = require("process");
 temp.track();
 
 // Set ENV var.
@@ -11,9 +12,24 @@ process.env.NODE_ENV = "production";
 
 async function createWindow(type, markPath) {
     const win = new BrowserWindow(windowType(type));
-    Menu.setApplicationMenu(null);
-    location = await createFile(markPath);
+    // Create Refresh Menu Button.
+    const menu = Menu.buildFromTemplate([{
+        label: "Refresh",
+        click: async function() {
+            // Get current window and Recreate the File.
+            const currentWin = BrowserWindow.getFocusedWindow();
+            let filePath = currentWin["currentFile"];
+            const location = await createFile(filePath);
+            BrowserWindow.getFocusedWindow().loadURL(`file://${location}`);
+        },
+        accelerator: "CmdOrCtrl + R",
+        toolTip: "Heyyy"
+    }]);
+    Menu.setApplicationMenu(menu);
+    const location = await createFile(markPath);
     win.loadURL(`file://${location}`);
+    // sets each BrowserWindow it's open filePath.
+    win["currentFile"] = markPath || path.join(__dirname, "index.md");
 }
 
 function windowType(type) {

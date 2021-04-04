@@ -91,10 +91,8 @@ ipcMain.on("open-file", (event) => {
 })
 
 async function createFile(markPath) {
-    // let templatePath = path.join(__dirname, "md2html-template.html");
-    // let outputPath = temp.openSync({ suffix: ".html" })["path"];
-    let templatePath = path.join(__dirname, "md2html.html");
-    let outputPath = path.join(__dirname, "index.html");
+    let templatePath = path.join(__dirname, "md2html-template.html");
+    let outputPath = temp.openSync({ suffix: ".html" })["path"];
 
     markPath = markPath || path.join(__dirname, "index.md");
     try {

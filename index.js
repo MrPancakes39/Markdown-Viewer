@@ -22,8 +22,7 @@ async function createWindow(type, markPath) {
             const location = await createFile(filePath);
             BrowserWindow.getFocusedWindow().loadURL(`file://${location}`);
         },
-        accelerator: "CmdOrCtrl + R",
-        toolTip: "Heyyy"
+        accelerator: "CmdOrCtrl + R"
     }]);
     Menu.setApplicationMenu(menu);
     const location = await createFile(markPath);

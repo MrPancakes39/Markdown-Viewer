@@ -12,6 +12,8 @@
 
     <link rel="stylesheet" href="./styles/stackoverflow-light.css">
     <script src="./scripts/highlight.min.js"></script>
+
+    <script src="./scripts/markdown-it-mathjax.js"></script>
     <style>
         .markdown-body {
             width: 80%;
@@ -84,6 +86,10 @@
             typographer: false,
             quotes: '“”‘’'
         });
+        markdownitMathjax({
+            beforeMath: "$",
+            afterMath: "$"
+        })(md);
         $("#preview").html(md.render($("#text-input").val()));
 
         /* codes below are adopted from https://codepen.io/jtojnar/full/Juiop */

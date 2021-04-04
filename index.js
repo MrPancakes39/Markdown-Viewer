@@ -67,21 +67,26 @@ ipcMain.on("open-file", (event) => {
     let filePath = dialog.showOpenDialogSync({
         properties: ["openFile"],
         filters: [{ name: "Markdown Files", extensions: ["md"] }]
-    })[0];
+    });
+    filePath = (filePath) ? filePath[0] : null;
 
-    createWindow({
-        width: 1280,
-        height: 720,
-        webPreferences: {
-            preload: path.join(__dirname, "preload-md.js")
-        },
-        icon: path.join(__dirname, "assets", "icon.png")
-    }, filePath);
+    if (filePath) {
+        createWindow({
+            width: 1280,
+            height: 720,
+            webPreferences: {
+                preload: path.join(__dirname, "preload-md.js")
+            },
+            icon: path.join(__dirname, "assets", "icon.png")
+        }, filePath);
+    }
 })
 
 async function createFile(markPath) {
-    let templatePath = path.join(__dirname, "md2html-template.html");
-    let outputPath = temp.openSync({ suffix: ".html" })["path"];
+    // let templatePath = path.join(__dirname, "md2html-template.html");
+    // let outputPath = temp.openSync({ suffix: ".html" })["path"];
+    let templatePath = path.join(__dirname, "md2html.html");
+    let outputPath = path.join(__dirname, "index.html");
 
     markPath = markPath || path.join(__dirname, "index.md");
     try {

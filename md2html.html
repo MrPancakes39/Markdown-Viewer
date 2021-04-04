@@ -14,6 +14,7 @@
     <script src="./scripts/highlight.min.js"></script>
 
     <script src="./scripts/markdown-it-mathjax.js"></script>
+    <script src="./scripts/purify.min.js"></script>
     <style>
         .markdown-body {
             width: 80%;
@@ -90,7 +91,7 @@
             beforeMath: "$",
             afterMath: "$"
         })(md);
-        $("#preview").html(md.render($("#text-input").val()));
+        $("#preview").html(DOMPurify.sanitize(md.render($("#text-input").val())));
 
         /* codes below are adopted from https://codepen.io/jtojnar/full/Juiop */
         String.prototype.repeat = function(num) {

@@ -7,6 +7,7 @@ image:
 
 install:
   - sh: nvm install --lts
+  - sh: PACK_VER=$(python3 -c "import json; x=open(\"package.json\",\"r\").read(); print(json.loads(x)[\"version\"]);")
   - ps: if ($isWindows) { Update-NodeJsInstallation $env:nodejs_version }
   - ps: $env:package_version = (Get-Content -Raw -Path package.json | ConvertFrom-Json).version
   - npm install
@@ -14,7 +15,8 @@ install:
 before_build:
   - node --version
   - npm run test
-  - echo v$(package_version)
+  - sh: echo $PACK_VER
+  - ps: echo v$(package_version)
 
 build_script:
   - cmd: npm run package-win
@@ -23,6 +25,6 @@ build_script:
 after_build:
   - sh: mv release-builds/markdown* release-builds/markdown-viewer
   - sh: cp builds/linux/* release-builds/markdown-viewer
-  - sh: cd release-builds && tar czf ./markdown-viewer-linux-v$(package_version).tar.gz markdown-viewer
+  - sh: cd release-builds && tar czf ./markdown-viewer-linux-v$PACK_VER.tar.gz markdown-viewer
   - sh: cd .. && ls release-builds/
   - cmd: dir  release-builds\markdown-viewer-win32-ia32

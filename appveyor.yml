@@ -55,5 +55,4 @@ deploy:
   force_update: true
   on:
     branch: main
-    DEPLOY: true
     APPVEYOR_REPO_TAG: true

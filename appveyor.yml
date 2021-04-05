@@ -40,7 +40,7 @@ artifacts:
     name: md-view
 
 deploy:
-  tag: $(APPVEYOR_REPO_TAG_NAME)
+  tag: $(package_version)
   release: Markdown-Viewer-v$(package_version)
   description: "Update $(package_version)"
   provider: GitHub

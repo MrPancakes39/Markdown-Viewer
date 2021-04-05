@@ -11,11 +11,14 @@ install:
   - ps: $env:package_version = (Get-Content -Raw -Path package.json | ConvertFrom-Json).version
   - npm install
 
-test_script:
+before_build:
   - node --version
   - npm run test
-  - dir release-builds/markdown-viewer*
 
 build_script:
   - cmd: npm run package-win
   - sh: npm run package-linux
+
+after_build:
+  - sh: ls release-builds/markdown*
+  - cmd: dir  release-builds\markdown*

@@ -48,11 +48,10 @@ deploy:
   description: "Update $(package_version)"
   provider: GitHub
   auth_token:
-    secure: a89z3Lqf4pRPewcATJLFtVsgEfnUxKPi7/B9+NLIKqIKGMNMm60tTQIkETUPRNi
-  artifact: md-view-win32
+    secure: a89z3Lqf4pRPewcATJLFtVsgEfnUxKPi7/B9+NLIKqIKGMNMm60tTQIkETUPRNis
+  artifact: md-view-win32,md-view-linux
   draft: false
   prerelease: false
-  force_update: true
   on:
     branch: main
     APPVEYOR_REPO_TAG: true

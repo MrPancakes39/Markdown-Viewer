@@ -1,0 +1,23 @@
+environment:
+  nodejs_version: "14.15.4"
+
+image:
+  - Ubuntu
+  - Visual Studio 2019
+
+install:
+  - sh: nvm use $env:nodejs_version
+  - ps: Update-NodeJsInstallation $env:nodejs_version
+  - ps: $env:package_version = (Get-Content -Raw -Path package.json | ConvertFrom-Json).version
+  - npm install
+
+test_script:
+  - node --version
+  - npm run test
+
+build_script:
+  - cmd: npm run package-win
+  - sh: npm run package-linux
+
+after_build:
+  - dir release-builds

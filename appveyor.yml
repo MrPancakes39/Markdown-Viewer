@@ -14,6 +14,7 @@ install:
 before_build:
   - node --version
   - npm run test
+  - echo v$(package_version)
 
 build_script:
   - cmd: npm run package-win
@@ -22,6 +23,6 @@ build_script:
 after_build:
   - sh: mv release-builds/markdown* release-builds/markdown-viewer
   - sh: cp builds/linux/* release-builds/markdown-viewer
-  - sh: cd release-builds && tar cvzf ./markdown-viewer.tar.gz markdown-viewer
+  - sh: cd release-builds && tar czf ./markdown-viewer-linux-v$(package_version).tar.gz markdown-viewer
   - sh: cd .. && ls release-builds/
   - cmd: dir  release-builds\markdown-viewer-win32-ia32

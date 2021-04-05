@@ -31,8 +31,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 ; DON'T FORGET TO EDIT THE PATH!!!!!!
-Source: "\path\to\Markdown-Viewer\release-builds\markdown-viewer-win32-ia32\markdown-viewer.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "\path\to\Markdown-Viewer\release-builds\markdown-viewer-win32-ia32\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ".\release-builds\markdown-viewer-win32-ia32\markdown-viewer.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\release-builds\markdown-viewer-win32-ia32\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

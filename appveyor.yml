@@ -20,5 +20,8 @@ build_script:
   - sh: npm run package-linux
 
 after_build:
-  - sh: ls release-builds/markdown*
-  - cmd: dir  release-builds\markdown*
+  - sh: mv release-builds/markdown* release-builds/markdown-viewer
+  - sh: cp builds/linux/* release-builds/markdown-viewer
+  - sh: cd release-builds && tar cvzf ./markdown-viewer.tar.gz markdown-viewer
+  - sh: cd .. && ls release-builds/
+  - cmd: dir  release-builds\markdown-viewer-win32-ia32

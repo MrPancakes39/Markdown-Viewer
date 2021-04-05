@@ -29,5 +29,5 @@ after_build:
   - sh: cd .. && ls release-builds/
   - cmd: copy builds\win32\setup.iss .
   # release-builds\markdown-viewer-win32-ia32
-  - cmd: iscc.exe --version
+  - cmd: "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" .\setup.iss
   - cmd: dir .

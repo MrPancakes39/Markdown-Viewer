@@ -6,7 +6,8 @@ image:
   - Visual Studio 2019
 
 install:
-  - ps: Update-NodeJsInstallation $env:nodejs_version
+  - sh: nvm install --lts && nvm use --lts
+  - ps: if ($isWindows) { Update-NodeJsInstallation $env:nodejs_version }
   - ps: $env:package_version = (Get-Content -Raw -Path package.json | ConvertFrom-Json).version
   - npm install
 

@@ -2,12 +2,12 @@ environment:
   nodejs_version: "14.15.4"
 
 image:
-  - Ubuntu
+  # - Ubuntu
   - Visual Studio 2019
 
 install:
-  - sh: nvm install --lts
-  - sh: PACK_VER=$(python3 -c "import json; x=open(\"package.json\",\"r\").read(); print(json.loads(x)[\"version\"]);")
+#   - sh: nvm install --lts
+#   - sh: PACK_VER=$(python3 -c "import json; x=open(\"package.json\",\"r\").read(); print(json.loads(x)[\"version\"]);")
   - ps: if ($isWindows) { Update-NodeJsInstallation $env:nodejs_version }
   - ps: $env:package_version = (Get-Content -Raw -Path package.json | ConvertFrom-Json).version
   - npm install
@@ -15,19 +15,19 @@ install:
 test_script:
   - node --version
   - npm run test
-  - sh: echo $PACK_VER
+  # - sh: echo $PACK_VER
   - ps: if ($isWindows) { echo $env:package_version }
 
 before_build:
   - cmd: npm run package-win
-  - sh: npm run package-linux
+  # - sh: npm run package-linux
 
 build_script:
   # Creates Tar Package For Linux.
-  - sh: mv release-builds/markdown* release-builds/markdown-viewer
-  - sh: cp builds/linux/* release-builds/markdown-viewer
-  - sh: cd release-builds && tar czf ./markdown-viewer-linux-v$PACK_VER.tar.gz markdown-viewer
-  - sh: cd .. && ls release-builds/
+  # - sh: mv release-builds/markdown* release-builds/markdown-viewer
+  # - sh: cp builds/linux/* release-builds/markdown-viewer
+  # - sh: cd release-builds && tar czf ./markdown-viewer-linux-v$PACK_VER.tar.gz markdown-viewer
+  # - sh: cd .. && ls release-builds/
 
   # Creates Exe Setup with Inno Setup for Windows.
   - cmd: copy builds\win32\setup.iss .
@@ -39,8 +39,8 @@ artifacts:
   - path: release-builds\*.exe
     name: md-view-win32
 
-  - path: release-builds\*.tar.gz
-    name: md-view-linux
+  # - path: release-builds\*.tar.gz
+  #   name: md-view-linux
 
 deploy:
   tag: $(package_version)

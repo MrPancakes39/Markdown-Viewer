@@ -55,16 +55,3 @@ deploy:
   on:
     branch: main
     APPVEYOR_REPO_TAG: true
-
-  tag: $(package_version)
-  release: Markdown-Viewer-v$(package_version)
-  description: "Update $(package_version)"
-  provider: GitHub
-  auth_token:
-    secure: a89z3Lqf4pRPewcATJLFtVsgEfnUxKPi7/B9+NLIKqIKGMNMm60tTQIkETUPRNi
-  artifact: md-view-linux
-  draft: false
-  prerelease: false
-  on:
-    branch: main
-    APPVEYOR_REPO_TAG: true

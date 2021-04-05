@@ -35,12 +35,12 @@ build_script:
   - ps: if ($isWindows) { move Output\setup.exe release-builds\markdown-viewer-win32-v$env:package_version-setup.exe}
   - cmd: rmdir Output
 
-artifacts:
-  - path: release-builds\*.exe
-    name: md-view-win32
+# artifacts:
+#   - path: release-builds\*.exe
+#     name: md-view-win32
 
-  - path: release-builds\*.tar.gz
-    name: md-view-linux
+#   - path: release-builds\*.tar.gz
+#     name: md-view-linux
 
 deploy:
   tag: $(package_version)
@@ -49,7 +49,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: a89z3Lqf4pRPewcATJLFtVsgEfnUxKPi7/B9+NLIKqIKGMNMm60tTQIkETUPRNis
-  artifact: md-view-win32,md-view-linux
+  artifact: release-builds\*.exe,release-builds\*.tar.gz
   draft: false
   prerelease: false
   force_update: true

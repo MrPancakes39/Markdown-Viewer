@@ -12,17 +12,17 @@ install:
   - ps: $env:package_version = (Get-Content -Raw -Path package.json | ConvertFrom-Json).version
   - npm install
 
-before_build:
+test_script:
   - node --version
   - npm run test
   - sh: echo $PACK_VER
   - ps: if ($isWindows) { echo $env:package_version }
 
-build_script:
+before_build:
   - cmd: npm run package-win
   - sh: npm run package-linux
 
-after_build:
+build_script:
   # Creates Tar Package For Linux.
   - sh: mv release-builds/markdown* release-builds/markdown-viewer
   - sh: cp builds/linux/* release-builds/markdown-viewer
@@ -33,4 +33,24 @@ after_build:
   - cmd: copy builds\win32\setup.iss .
   - cmd: C:\"Program Files (x86)"\"Inno Setup 6"\ISCC.exe .\setup.iss
   - ps: if ($isWindows) { move Output\setup.exe release-builds\markdown-viewer-win32-v$env:package_version-setup.exe}
-  - cmd: rmdir Output && dir . && echo "------ Seperator ------" && dir release-builds
+  - cmd: rmdir Output
+
+artifacts:
+  - path: release-builds\*.exe
+    name: md-view-win32
+
+  - path: release-builds\*.tar.gz
+    name: md-view-linux
+
+deploy:
+  release: Markdown-Viewer-v$(package_version)
+  description: "Update $(package_version)"
+  provider: GitHub
+  auth_token:
+    secure: a89z3Lqf4pRPewcATJLFtVsgEfnUxKPi7/B9+NLIKqIKGMNMm60tTQIkETUPRNi
+  artifact: md-view-win32,md-view-linux
+  draft: false
+  prerelease: false
+  on:
+    branch: main
+    APPVEYOR_REPO_TAG: true

@@ -36,8 +36,11 @@ build_script:
   - cmd: rmdir Output
 
 artifacts:
-  - path: /release-builds\\*\.(exe|tar.gz)/   # matches anything that ends with .exe or .tar.gz
-    name: md-view
+  - path: release-builds\*.exe
+    name: md-view-win32
+
+  - path: release-builds\*.tar.gz
+    name: md-view-linux
 
 deploy:
   tag: $(package_version)
@@ -46,7 +49,20 @@ deploy:
   provider: GitHub
   auth_token:
     secure: a89z3Lqf4pRPewcATJLFtVsgEfnUxKPi7/B9+NLIKqIKGMNMm60tTQIkETUPRNi
-  artifact: md-view
+  artifact: md-view-win32
+  draft: false
+  prerelease: false
+  on:
+    branch: main
+    APPVEYOR_REPO_TAG: true
+
+  tag: $(package_version)
+  release: Markdown-Viewer-v$(package_version)
+  description: "Update $(package_version)"
+  provider: GitHub
+  auth_token:
+    secure: a89z3Lqf4pRPewcATJLFtVsgEfnUxKPi7/B9+NLIKqIKGMNMm60tTQIkETUPRNi
+  artifact: md-view-linux
   draft: false
   prerelease: false
   on:

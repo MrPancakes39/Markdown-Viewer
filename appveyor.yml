@@ -6,7 +6,7 @@ image:
   - Visual Studio 2019
 
 install:
-  - sh: nvm install --lts && nvm use --lts
+  - sh: nvm install --lts
   - ps: if ($isWindows) { Update-NodeJsInstallation $env:nodejs_version }
   - ps: $env:package_version = (Get-Content -Raw -Path package.json | ConvertFrom-Json).version
   - npm install
@@ -14,10 +14,8 @@ install:
 test_script:
   - node --version
   - npm run test
+  - dir release-builds/markdown-viewer*
 
 build_script:
   - cmd: npm run package-win
   - sh: npm run package-linux
-
-after_build:
-  - dir release-builds

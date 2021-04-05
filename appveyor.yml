@@ -36,11 +36,8 @@ build_script:
   - cmd: rmdir Output
 
 artifacts:
-  - path: release-builds\*.exe
-    name: md-view-win32
-
-  - path: release-builds\*.tar.gz
-    name: md-view-linux
+  - path: /release-builds\\*\.(exe|tar.gz)/   # matches anything that ends with .exe or .tar.gz
+    name: md-view
 
 deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
@@ -49,7 +46,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: a89z3Lqf4pRPewcATJLFtVsgEfnUxKPi7/B9+NLIKqIKGMNMm60tTQIkETUPRNi
-  artifact: md-view-win32,md-view-linux
+  artifact: md-view
   draft: false
   prerelease: false
   on:

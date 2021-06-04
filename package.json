@@ -3,6 +3,7 @@
   "version": "1.1.0",
   "description": "A Simple Markdown Viewer for rest of us.",
   "main": "index.js",
+  "repository": "https://github.com/MrPancakes39/Markdown-Viewer",
   "scripts": {
     "start": "electron .",
     "test": "electron --version",
@@ -12,13 +13,14 @@
   "keywords": [
     "markdown"
   ],
-  "author": "Salman Hasan",
+  "author": "Salman Hasan <salmannhassan39@gmail.com>",
   "license": "GPL-3.0",
-  "devDependencies": {
-    "electron": "^12.0.2",
-    "electron-packager": "^15.2.0"
-  },
+  "private": false,
   "dependencies": {
     "temp": "^0.9.4"
+  },
+  "devDependencies": {
+    "electron": "^13.1.0",
+    "electron-packager": "^15.2.0"
   }
 }

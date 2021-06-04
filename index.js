@@ -25,7 +25,7 @@ async function createWindow(type, markPath) {
         },
         accelerator: "CmdOrCtrl + R"
     }]);
-    Menu.setApplicationMenu(menu);
+    // Menu.setApplicationMenu(menu);
     const location = await createFile(markPath);
     win.loadURL(`file://${location}`);
     // sets each BrowserWindow it's open filePath.
@@ -60,7 +60,8 @@ app.whenReady().then(() => {
         let filePath = process.argv[1];
         createWindow("markdown", filePath);
     } else {
-        createWindow("default");
+        // createWindow("default");
+        createWindow("markdown", "");
     }
 
     app.on("activate", () => {
@@ -91,10 +92,11 @@ ipcMain.on("open-file", (event) => {
 })
 
 async function createFile(markPath) {
-    let templatePath = path.join(__dirname, "md2html-template.html");
-    let outputPath = temp.openSync({ suffix: ".html" })["path"];
+    const templatePath = path.join(__dirname, "template.html");
+    const outputPath = temp.openSync({ suffix: ".html" })["path"];
 
     markPath = markPath || path.join(__dirname, "index.md");
+    markPath = path.join(app.getPath("desktop"), "md-showcase.md");
     try {
         const htmlFile = fs.readFileSync(templatePath, "utf-8");
         const markFile = fs.readFileSync(markPath, "utf-8");

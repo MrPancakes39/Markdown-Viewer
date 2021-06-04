@@ -1,0 +1,66 @@
+.markdown-body {
+    width: 80%;
+    padding-left: 20%;
+}
+
+#toc {
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 18%;
+    height: 100%;
+    background: #FCFCFC;
+    overflow: auto;
+}
+
+.table-of-contents {
+    font-size: 0.8em;
+    padding: 1em 2em;
+}
+
+.table-of-contents ul {
+    list-style-type: none;
+    padding: 0;
+    padding-left: 1em;
+}
+
+.table-of-contents>ul {
+    padding: 0;
+}
+
+.table-of-contents li {
+    margin: 0 0 0.25em 0;
+}
+
+.table-of-contents a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.table-of-contents a:hover,
+.table-of-contents a:active {
+    text-decoration: underline;
+}
+
+h1:target,
+h2:target,
+h3:target,
+h4:target {
+    animation: highlight 1s ease;
+}
+
+@keyframes highlight {
+    from {
+        background: yellow;
+    }
+
+    to {
+        background: white;
+    }
+}
+
+.MathJax.CtxtMenu_Attached_0 {
+    overflow-x: auto;
+    overflow-y: hidden;
+}

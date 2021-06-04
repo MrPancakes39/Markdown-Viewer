@@ -7,6 +7,7 @@
   "scripts": {
     "start": "electron .",
     "test": "electron --version",
+    "gen-tmp": "node generate-template.js",
     "package-win": "electron-packager . markdown-viewer --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icon.ico --prune=true --out=release-builds --version-string.CompanyName=SH --version-string.FileDescription=SH --version-string.ProductName=\"Markdown Viewer\"",
     "package-linux": "electron-packager . markdown-viewer --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icon.png --prune=true --out=release-builds"
   },

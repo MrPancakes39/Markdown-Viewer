@@ -8,7 +8,7 @@ const { electron } = require("process");
 temp.track();
 
 // Set ENV var.
-process.env.NODE_ENV = "production";
+// process.env.NODE_ENV = "production";
 
 async function createWindow(type, markPath) {
     const win = new BrowserWindow(windowType(type));
@@ -19,6 +19,7 @@ async function createWindow(type, markPath) {
             // Get current window and Recreate the File.
             const currentWin = BrowserWindow.getFocusedWindow();
             let filePath = currentWin["currentFile"];
+            temp.cleanupSync();
             const location = await createFile(filePath);
             BrowserWindow.getFocusedWindow().loadURL(`file://${location}`);
         },

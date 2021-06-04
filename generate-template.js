@@ -7,7 +7,7 @@ const outputPath = path.join(__dirname, "template.html");
 let outputFile = fs.readFileSync(templatePath, "utf-8");
 
 const styles = outputFile.match(/<link rel="stylesheet" href="\..+">/g);
-const scripts = outputFile.match(/<script src="\..+"><\/script>/g);
+const scripts = outputFile.match(/<script( id=".+")? src="\..+"><\/script>/g);
 
 String.prototype.replaceText = function(orgText, repText) {
     return this.toString().split(orgText).join(repText);

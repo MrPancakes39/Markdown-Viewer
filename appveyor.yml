@@ -49,7 +49,7 @@ artifacts:
     name: md-view-linux
 
 deploy:
-  tag: $(package_version)
+  tag: v$(package_version)
   release: Markdown-Viewer-v$(package_version)
   description: "Update $(package_version)"
   provider: GitHub

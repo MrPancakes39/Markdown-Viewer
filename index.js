@@ -8,7 +8,7 @@ const { electron } = require("process");
 temp.track();
 
 // Set ENV var.
-// process.env.NODE_ENV = "production";
+process.env.NODE_ENV = "production";
 
 async function createWindow(type, markPath) {
     const win = new BrowserWindow(windowType(type));
@@ -25,7 +25,7 @@ async function createWindow(type, markPath) {
         },
         accelerator: "CmdOrCtrl + R"
     }]);
-    // Menu.setApplicationMenu(menu);
+    Menu.setApplicationMenu(menu);
     const location = await createFile(markPath);
     win.loadURL(`file://${location}`);
     // sets each BrowserWindow it's open filePath.
@@ -64,7 +64,6 @@ app.whenReady().then(() => {
         createWindow("markdown", filePath);
     } else {
         createWindow("default");
-        // createWindow("markdown", "");
     }
 
     app.on("activate", () => {
@@ -99,7 +98,6 @@ async function createFile(markPath) {
     const outputPath = temp.openSync({ suffix: ".html" })["path"];
 
     markPath = markPath || path.join(__dirname, "index.md");
-    // markPath = path.join(app.getPath("desktop"), "md-showcase.md");
     try {
         const htmlFile = fs.readFileSync(templatePath, "utf-8");
         let markFile = fs.readFileSync(markPath, "utf-8");

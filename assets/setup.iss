@@ -31,8 +31,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 ; DON'T FORGET TO EDIT THE PATH!!!!!!
-Source: "release-builds\win-unpacked\markdown-viewer.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "release-builds\win-unpacked\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "release-builds\win-ia32-unpacked\Markdown Viewer.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "release-builds\win-ia32-unpacked\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

@@ -39,7 +39,11 @@
     ],
     "linux": {
       "icon": "./assets/icon.png",
-      "target": ["tar.gz"]
+      "target": ["dir"]
+    },
+    "win": {
+      "icon": "./assets/icon.ico",
+      "target": ["dir"]
     },
     "copyright": "Copyright © 2021 Salman Hasan"
   }

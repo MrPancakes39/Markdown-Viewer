@@ -63,8 +63,8 @@ app.whenReady().then(() => {
         let filePath = process.argv[1];
         createWindow("markdown", filePath);
     } else {
-        // createWindow("default");
-        createWindow("markdown", "");
+        createWindow("default");
+        // createWindow("markdown", "");
     }
 
     app.on("activate", () => {
@@ -99,7 +99,7 @@ async function createFile(markPath) {
     const outputPath = temp.openSync({ suffix: ".html" })["path"];
 
     markPath = markPath || path.join(__dirname, "index.md");
-    markPath = path.join(app.getPath("desktop"), "md-showcase.md");
+    // markPath = path.join(app.getPath("desktop"), "md-showcase.md");
     try {
         const htmlFile = fs.readFileSync(templatePath, "utf-8");
         let markFile = fs.readFileSync(markPath, "utf-8");

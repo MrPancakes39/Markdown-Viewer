@@ -18,7 +18,7 @@ let ToC =
     "<h2>Contents:</h2>" +
     "<ul>";
 
-let newLine, el, title, link,
+let newLine, el, title, link, attr,
     level = 0,
     baseLevel = 0,
     count = 0;
@@ -27,9 +27,10 @@ $("#preview h1, #preview h2, #preview h3, #preview h4").each(function() {
     count++;
     el = $(this);
     title = el.text();
+    attr = title.toLowerCase().split(" ").join("-");
 
-    $(this).attr("id", "h-" + count);
-    link = "#h-" + count;
+    $(this).attr("id", attr);
+    link = "#" + attr;
 
     let prevLevel = level || 0;
     level = this.nodeName.substr(1);

@@ -36,7 +36,7 @@ build_script:
   # Creates Exe Setup with Inno Setup for Windows.
   - cmd: copy assets\setup.iss .
   - cmd: dir release-builds
-  - cmd: dir release-builds\win-unpacked
+  - cmd: dir release-builds\win-ia32-unpacked
   # - cmd: C:\"Program Files (x86)"\"Inno Setup 6"\ISCC.exe .\setup.iss
   # - ps: if ($isWindows) { move Output\setup.exe release-builds\markdown-viewer-setup.exe}
   # - cmd: rmdir Output

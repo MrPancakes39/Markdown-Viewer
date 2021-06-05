@@ -30,6 +30,7 @@ async function createWindow(type, markPath) {
     win.loadURL(`file://${location}`);
     // sets each BrowserWindow it's open filePath.
     win["currentFile"] = markPath || path.join(__dirname, "index.md");
+    win.on("ready-to-show", () => win.show());
 }
 
 function windowType(type) {
@@ -40,7 +41,8 @@ function windowType(type) {
             webPreferences: {
                 preload: path.join(__dirname, "preload-md.js")
             },
-            icon: path.join(__dirname, "assets", "icon.png")
+            icon: path.join(__dirname, "assets", "icon.png"),
+            show: false
         }
     }
     return {
@@ -50,7 +52,8 @@ function windowType(type) {
             preload: path.join(__dirname, "preload-ind.js")
         },
         icon: path.join(__dirname, "assets", "icon.png"),
-        resizable: false
+        resizable: false,
+        show: false
     }
 }
 

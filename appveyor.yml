@@ -24,8 +24,7 @@ test_script:
 
 before_build:
   - ps: yarn run gen-tmp
-  - cmd: yarn run package-win
-  - sh: yarn run package-linux
+  - ps: yarn run dist
 
 build_script:
   # Creates Tar Package For Linux.

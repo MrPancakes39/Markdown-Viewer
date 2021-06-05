@@ -118,6 +118,7 @@ async function createFile(markPath) {
 function replaceImages(markPath, markFile) {
     let images;
     images = markFile.match(/!\[.*\]\(\..*\)/g);
+    images = (images) ? images : [];
     images.forEach(img => {
         let imgPath = img.match(/\(.*\)/g)[0].slice(1, -1);
         if (imgPath) {
@@ -128,6 +129,7 @@ function replaceImages(markPath, markFile) {
     });
 
     images = markFile.match(/<img( alt=".*")? src="\..+">/g);
+    images = (images) ? images : [];
     images.forEach(img => {
         let imgPath = img.match(/src="\..+"/g)[0].slice(5, -1);
         if (imgPath) {

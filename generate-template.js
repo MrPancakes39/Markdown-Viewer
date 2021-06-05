@@ -25,7 +25,12 @@ scripts.forEach(js => {
     let src = js.match(/src=".+"/g)[0].slice(5, -1);
     let jsPath = path.join(__dirname, src);
     let jsFile = fs.readFileSync(jsPath, "utf-8");
-    let jsScript = "<script>\n" + jsFile + "\n</script>";
+    let attr = ""
+    if (js.includes("id")) {
+        let id = js.match(/id=".+" src/g)[0].slice(4, -5);
+        attr = ` id="${id}"`;
+    }
+    let jsScript = `<script${attr}>\n` + jsFile + "\n</script>";
     outputFile = outputFile.replaceText(js, jsScript);
 });
 

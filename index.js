@@ -19,6 +19,7 @@ async function createWindow(type, markPath) {
             // Get current window and Recreate the File.
             const currentWin = BrowserWindow.getFocusedWindow();
             let filePath = currentWin["currentFile"];
+            temp.cleanupSync();
             const location = await createFile(filePath);
             BrowserWindow.getFocusedWindow().loadURL(`file://${location}`);
         },
@@ -29,6 +30,7 @@ async function createWindow(type, markPath) {
     win.loadURL(`file://${location}`);
     // sets each BrowserWindow it's open filePath.
     win["currentFile"] = markPath || path.join(__dirname, "index.md");
+    win.on("ready-to-show", () => win.show());
 }
 
 function windowType(type) {
@@ -39,7 +41,8 @@ function windowType(type) {
             webPreferences: {
                 preload: path.join(__dirname, "preload-md.js")
             },
-            icon: path.join(__dirname, "assets", "icon.png")
+            icon: path.join(__dirname, "assets", "icon.png"),
+            show: false
         }
     }
     return {
@@ -49,7 +52,8 @@ function windowType(type) {
             preload: path.join(__dirname, "preload-ind.js")
         },
         icon: path.join(__dirname, "assets", "icon.png"),
-        resizable: false
+        resizable: false,
+        show: false
     }
 }
 
@@ -87,16 +91,17 @@ ipcMain.on("open-file", (event) => {
     if (filePath) {
         createWindow("markdown", filePath);
     }
-})
+});
 
 async function createFile(markPath) {
-    let templatePath = path.join(__dirname, "md2html-template.html");
-    let outputPath = temp.openSync({ suffix: ".html" })["path"];
+    const templatePath = path.join(__dirname, "template.html");
+    const outputPath = temp.openSync({ suffix: ".html" })["path"];
 
     markPath = markPath || path.join(__dirname, "index.md");
     try {
         const htmlFile = fs.readFileSync(templatePath, "utf-8");
-        const markFile = fs.readFileSync(markPath, "utf-8");
+        let markFile = fs.readFileSync(markPath, "utf-8");
+        markFile = replaceImages(markPath, markFile);
 
         const indexFile = htmlFile.split("{{content}}").join(markFile);
         fs.writeFileSync(outputPath, indexFile);
@@ -105,4 +110,31 @@ async function createFile(markPath) {
     } catch (err) {
         console.error(err)
     }
+}
+
+// replaces relative paths to images with absoulte path to them.
+function replaceImages(markPath, markFile) {
+    let images;
+    images = markFile.match(/!\[.*\]\(\..*\)/g);
+    images = (images) ? images : [];
+    images.forEach(img => {
+        let imgPath = img.match(/\(.*\)/g)[0].slice(1, -1);
+        if (imgPath) {
+            let newPath = path.join(path.dirname(markPath), imgPath);
+            let newImg = img.split(imgPath).join(newPath);
+            markFile = markFile.split(img).join(newImg);
+        }
+    });
+
+    images = markFile.match(/<img( alt=".*")? src="\..+">/g);
+    images = (images) ? images : [];
+    images.forEach(img => {
+        let imgPath = img.match(/src="\..+"/g)[0].slice(5, -1);
+        if (imgPath) {
+            let newPath = path.join(path.dirname(markPath), imgPath);
+            let newImg = img.split(imgPath).join(newPath);
+            markFile = markFile.split(img).join(newImg);
+        }
+    });
+    return markFile;
 }

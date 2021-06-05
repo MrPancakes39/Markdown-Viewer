@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Markdown Viewer"
-#define MyAppVersion "1.1.0"
+#define MyAppVersion "1.1.1"
 #define MyAppPublisher "Salman's Productions"
 #define MyAppExeName "markdown-viewer.exe"
 
@@ -31,8 +31,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 ; DON'T FORGET TO EDIT THE PATH!!!!!!
-Source: "release-builds\markdown-viewer-win32-ia32\markdown-viewer.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "release-builds\markdown-viewer-win32-ia32\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "release-builds\win-unpacked\markdown-viewer.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "release-builds\win-unpacked\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

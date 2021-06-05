@@ -3,3 +3,4 @@ release-builds/
 builds/win32/setup.exe
 builds/linux/markdown-viewer.tar.gz
 index.html
+template.html

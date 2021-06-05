@@ -14,27 +14,28 @@ install:
   - sh: PACK_VER=$(python3 -c "import json; x=open(\"package.json\",\"r\").read(); print(json.loads(x)[\"version\"]);")
   - ps: if ($isWindows) { Update-NodeJsInstallation $env:nodejs_version }
   - ps: $env:package_version = (Get-Content -Raw -Path package.json | ConvertFrom-Json).version
-  - npm install
+  - yarn
 
 test_script:
   - node --version
-  - npm run test
+  - yarn run test
   - sh: echo $PACK_VER
   - ps: if ($isWindows) { echo $env:package_version }
 
 before_build:
-  - cmd: npm run package-win
-  - sh: npm run package-linux
+  - ps: yarn run gen-tmp
+  - cmd: yarn run package-win
+  - sh: yarn run package-linux
 
 build_script:
   # Creates Tar Package For Linux.
-  - sh: mv release-builds/markdown* release-builds/markdown-viewer
-  - sh: cp builds/linux/* release-builds/markdown-viewer
+  - sh: mv release-builds/linux-unpacked release-builds/markdown-viewer
+  - sh: cp assets/\!\!\!READ_ME\!\!\!.txt assets/md-view.desktop assets/icon.png release-builds/markdown-viewer
   - sh: cd release-builds && tar czf ./markdown-viewer-linux.tar.gz markdown-viewer
   - sh: cd .. && ls release-builds/
 
   # Creates Exe Setup with Inno Setup for Windows.
-  - cmd: copy builds\win32\setup.iss .
+  - cmd: copy assets\setup.iss .
   - cmd: C:\"Program Files (x86)"\"Inno Setup 6"\ISCC.exe .\setup.iss
   - ps: if ($isWindows) { move Output\setup.exe release-builds\markdown-viewer-setup.exe}
   - cmd: rmdir Output

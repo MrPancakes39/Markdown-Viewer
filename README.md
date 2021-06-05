@@ -1,5 +1,6 @@
 # Markdown-Viewer
 
+![release-version](https://img.shields.io/github/v/release/MrPancakes39/Markdown-Viewer)
 [![license](https://img.shields.io/github/license/MrPancakes39/Markdown-Viewer.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 ![build-status](https://img.shields.io/appveyor/build/MrPancakes39/markdown-viewer)
 

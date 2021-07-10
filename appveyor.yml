@@ -24,11 +24,12 @@ test_script:
 
 before_build:
   - ps: yarn run gen-tmp
-  - ps: yarn run dist
+  - cmd: yarn run package-win
+  - sh: yarn run package-linux
 
 build_script:
   # Creates Tar Package For Linux.
-  - sh: mv release-builds/linux-unpacked release-builds/markdown-viewer
+  - sh: mv release-builds/markdown* release-builds/markdown-viewer
   - sh: cp assets/\!\!\!READ_ME\!\!\!.txt assets/md-view.desktop assets/icon.png release-builds/markdown-viewer
   - sh: cd release-builds && tar czf ./markdown-viewer-linux.tar.gz markdown-viewer
   - sh: cd .. && ls release-builds/

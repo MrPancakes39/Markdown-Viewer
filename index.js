@@ -14,7 +14,7 @@ async function createWindow(type, markPath) {
     const win = new BrowserWindow(windowType(type));
     Menu.setApplicationMenu(null);
 
-    markPath = markPath || path.join(__dirname, "index.md");
+    markPath = markPath || path.join(__dirname, "app", "md-chooser", "index.md");
     const location = await createFile(markPath);
     win.loadURL(`file://${location}`);
 
@@ -41,9 +41,9 @@ function windowType(type) {
             width: 1280,
             height: 720,
             webPreferences: {
-                preload: path.join(__dirname, "preload-md.js")
+                preload: path.join(__dirname, "app", "md-renderer", "preload-md.js")
             },
-            icon: path.join(__dirname, "assets", "icon.png"),
+            icon: path.join(__dirname, "app", "assets", "icon.png"),
             show: false
         }
     }
@@ -51,9 +51,9 @@ function windowType(type) {
         width: 600,
         height: 450,
         webPreferences: {
-            preload: path.join(__dirname, "preload-ind.js")
+            preload: path.join(__dirname, "app", "md-chooser", "preload-ind.js")
         },
-        icon: path.join(__dirname, "assets", "icon.png"),
+        icon: path.join(__dirname, "app", "assets", "icon.png"),
         resizable: false,
         show: false
     }

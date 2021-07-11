@@ -8,29 +8,31 @@ const { electron } = require("process");
 temp.track();
 
 // Set ENV var.
-process.env.NODE_ENV = "production";
+// process.env.NODE_ENV = "production";
 
 async function createWindow(type, markPath) {
     const win = new BrowserWindow(windowType(type));
-    // Create Refresh Menu Button.
-    const menu = Menu.buildFromTemplate([{
-        label: "Refresh",
-        click: async function() {
+    Menu.setApplicationMenu(null);
+
+    markPath = markPath || path.join(__dirname, "index.md");
+    const location = await createFile(markPath);
+    win.loadURL(`file://${location}`);
+
+    // sets each BrowserWindow it's open filePath.
+    win["currentFile"] = markPath;
+    win.on("ready-to-show", () => win.show());
+
+    // Every time the text file changes refresh the page.
+    if (type == "markdown") {
+        fs.watchFile(markPath, { persistent: true, interval: 100 }, async () => {
             // Get current window and Recreate the File.
-            const currentWin = BrowserWindow.getFocusedWindow();
+            const currentWin = BrowserWindow.getAllWindows().find(win => win["currentFile"] == markPath);
             let filePath = currentWin["currentFile"];
             temp.cleanupSync();
             const location = await createFile(filePath);
-            BrowserWindow.getFocusedWindow().loadURL(`file://${location}`);
-        },
-        accelerator: "CmdOrCtrl + R"
-    }]);
-    Menu.setApplicationMenu(menu);
-    const location = await createFile(markPath);
-    win.loadURL(`file://${location}`);
-    // sets each BrowserWindow it's open filePath.
-    win["currentFile"] = markPath || path.join(__dirname, "index.md");
-    win.on("ready-to-show", () => win.show());
+            currentWin.loadURL(`file://${location}`);
+        });
+    }
 }
 
 function windowType(type) {
@@ -97,7 +99,6 @@ async function createFile(markPath) {
     const templatePath = path.join(__dirname, "template.html");
     const outputPath = temp.openSync({ suffix: ".html" })["path"];
 
-    markPath = markPath || path.join(__dirname, "index.md");
     try {
         const htmlFile = fs.readFileSync(templatePath, "utf-8");
         let markFile = fs.readFileSync(markPath, "utf-8");

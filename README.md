@@ -3,6 +3,7 @@
 ![release-version](https://img.shields.io/github/v/release/MrPancakes39/Markdown-Viewer)
 [![license](https://img.shields.io/github/license/MrPancakes39/Markdown-Viewer.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 ![build-status](https://img.shields.io/appveyor/build/MrPancakes39/markdown-viewer)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FMrPancakes39%2FMarkdown-Viewer.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FMrPancakes39%2FMarkdown-Viewer?ref=badge_shield)
 
 A Simple Markdown Viewer for rest of us.
 
@@ -39,3 +40,6 @@ $ yarn run dist
 ![GPL-v3](https://www.gnu.org/graphics/gplv3-127x51.png)
 
 All source codes are licensed under [GPL-3.0](https://opensource.org/licenses/GPL-3.0).
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FMrPancakes39%2FMarkdown-Viewer.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FMrPancakes39%2FMarkdown-Viewer?ref=badge_large)

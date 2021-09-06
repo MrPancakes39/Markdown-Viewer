@@ -15,7 +15,7 @@
     "markdown"
   ],
   "author": "Salman Hasan <salmannhassan39@gmail.com>",
-  "license": "GPL-3.0",
+  "license": "GPL-3.0-only",
   "private": false,
   "dependencies": {
     "temp": "^0.9.4"

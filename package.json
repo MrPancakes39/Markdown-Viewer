@@ -20,7 +20,7 @@
     "temp": "^0.9.4"
   },
   "devDependencies": {
-    "electron": "^22.3.25",
+    "electron": "^28.3.2",
     "electron-builder": "^22.10.5"
   },
   "build": {
